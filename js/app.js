@@ -795,6 +795,13 @@ function finalizeImplementation(solution) {
     // Re-render solutions
     renderSolutions();
     
+    // Update solution stats if on solutions page
+    if (window.location.pathname.includes('solutions.html') && typeof window.updateSolutionStats === 'function') {
+        setTimeout(() => {
+            window.updateSolutionStats();
+        }, 100);
+    }
+    
     // Update dashboard if open
     if (window.location.pathname.includes('dashboard.html')) {
         loadMetrics();

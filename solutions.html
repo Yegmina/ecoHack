@@ -11,7 +11,7 @@
 <body>
     <nav class="navbar">
         <div class="nav-brand">
-            <h2>🌱 CityEcho</h2>
+            <img src="logo.png" alt="CityEcho Logo" style="height: 60px; vertical-align: middle;">
         </div>
         <ul class="nav-links">
             <li><a href="dashboard.html">Dashboard</a></li>
@@ -73,38 +73,52 @@
     <script src="js/gamification.js"></script>
     <script src="js/app.js"></script>
     <script>
-        // Update solution stats
-        document.addEventListener('DOMContentLoaded', function() {
-            function updateSolutionStats() {
-                const total = DEMO_DATA.solutions.length;
-                const implemented = DEMO_DATA.solutions.filter(s => s.implemented).length;
-                const totalCO2 = DEMO_DATA.solutions.filter(s => s.implemented).reduce((sum, s) => sum + s.co2Saved, 0);
-                const totalEnergy = DEMO_DATA.solutions.filter(s => s.implemented).reduce((sum, s) => sum + (s.energyProduced || s.energySaved || 0), 0);
+        // Update solution stats function - make it globally available
+        function updateSolutionStats() {
+            if (typeof DEMO_DATA === 'undefined' || !DEMO_DATA.solutions) return;
+            
+            const total = DEMO_DATA.solutions.length;
+            const implemented = DEMO_DATA.solutions.filter(s => s.implemented).length;
+            const totalCO2 = DEMO_DATA.solutions.filter(s => s.implemented).reduce((sum, s) => sum + (s.co2Saved || 0), 0);
+            const totalEnergy = DEMO_DATA.solutions.filter(s => s.implemented).reduce((sum, s) => sum + (s.energyProduced || s.energySaved || 0), 0);
 
-                const totalEl = document.getElementById('totalSolutions');
-                const implEl = document.getElementById('implementedSolutions');
-                const co2El = document.getElementById('solutionsCO2');
-                const energyEl = document.getElementById('solutionsEnergy');
+            const totalEl = document.getElementById('totalSolutions');
+            const implEl = document.getElementById('implementedSolutions');
+            const co2El = document.getElementById('solutionsCO2');
+            const energyEl = document.getElementById('solutionsEnergy');
 
-                if (totalEl) totalEl.textContent = total;
-                if (implEl) implEl.textContent = implemented;
-                if (co2El) co2El.textContent = formatNumber(totalCO2) + ' kg';
-                if (energyEl) energyEl.textContent = formatNumber(totalEnergy) + ' kWh';
-            }
-
-            // Override implementSolution to update stats
-            const originalImplement = window.implementSolution;
-            window.implementSolution = function(solutionId) {
-                originalImplement(solutionId);
-                setTimeout(updateSolutionStats, 100);
-            };
-
-            updateSolutionStats();
-        });
+            if (totalEl) totalEl.textContent = total;
+            if (implEl) implEl.textContent = implemented;
+            if (co2El) co2El.textContent = formatNumber(totalCO2) + ' kg';
+            if (energyEl) energyEl.textContent = formatNumber(totalEnergy) + ' kWh';
+        }
 
         function formatNumber(num) {
             return new Intl.NumberFormat('en-US').format(num);
         }
+
+        // Make function globally available
+        window.updateSolutionStats = updateSolutionStats;
+
+        // Update stats on page load (after all scripts are loaded)
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                updateSolutionStats();
+            }, 200);
+        });
+
+        // Also hook into renderSolutions to update stats when solutions are re-rendered
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                if (window.renderSolutions) {
+                    const originalRenderSolutions = window.renderSolutions;
+                    window.renderSolutions = function() {
+                        originalRenderSolutions();
+                        setTimeout(updateSolutionStats, 100);
+                    };
+                }
+            }, 300);
+        });
     </script>
 </body>
 </html>
