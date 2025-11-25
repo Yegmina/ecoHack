@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solutions - EcoHack</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2>🌱 EcoHack</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="battle.html">Region Battle</a></li>
+            <li><a href="solutions.html" class="active">Solutions</a></li>
+        </ul>
+        <div class="user-profile">
+            <!-- Populated by app.js -->
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>💡 Urban Energy Solutions</h1>
+            <p>Browse and implement eco-friendly solutions to improve your region's sustainability score</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="stats-row" style="margin-bottom: 2rem;">
+            <div class="stat-item">
+                <div class="stat-label">Total Solutions</div>
+                <div class="stat-value" id="totalSolutions">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Implemented</div>
+                <div class="stat-value" id="implementedSolutions">0</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total CO₂ Saved</div>
+                <div class="stat-value" id="solutionsCO2">0 kg</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Total Energy</div>
+                <div class="stat-value" id="solutionsEnergy">0 kWh</div>
+            </div>
+        </div>
+
+        <!-- Solutions Container -->
+        <div id="solutionsContainer">
+            <!-- Populated by app.js -->
+        </div>
+
+        <!-- Info Card -->
+        <div class="card" style="margin-top: 2rem; background: var(--bg-light);">
+            <div class="card-header">
+                <h3>ℹ️ How It Works</h3>
+            </div>
+            <div style="line-height: 1.8; color: var(--text-light);">
+                <p><strong>1. Browse Solutions:</strong> Explore different urban energy solutions organized by category.</p>
+                <p><strong>2. Review Metrics:</strong> Each solution shows CO₂ savings, energy impact, efficiency rating, and ROI.</p>
+                <p><strong>3. Implement:</strong> Click "Implement Solution" to add it to your region. You'll earn ecocarma points!</p>
+                <p><strong>4. Track Impact:</strong> See your region's score increase and climb the leaderboards.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        // Update solution stats
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateSolutionStats() {
+                const total = DEMO_DATA.solutions.length;
+                const implemented = DEMO_DATA.solutions.filter(s => s.implemented).length;
+                const totalCO2 = DEMO_DATA.solutions.filter(s => s.implemented).reduce((sum, s) => sum + s.co2Saved, 0);
+                const totalEnergy = DEMO_DATA.solutions.filter(s => s.implemented).reduce((sum, s) => sum + (s.energyProduced || s.energySaved || 0), 0);
+
+                const totalEl = document.getElementById('totalSolutions');
+                const implEl = document.getElementById('implementedSolutions');
+                const co2El = document.getElementById('solutionsCO2');
+                const energyEl = document.getElementById('solutionsEnergy');
+
+                if (totalEl) totalEl.textContent = total;
+                if (implEl) implEl.textContent = implemented;
+                if (co2El) co2El.textContent = formatNumber(totalCO2) + ' kg';
+                if (energyEl) energyEl.textContent = formatNumber(totalEnergy) + ' kWh';
+            }
+
+            // Override implementSolution to update stats
+            const originalImplement = window.implementSolution;
+            window.implementSolution = function(solutionId) {
+                originalImplement(solutionId);
+                setTimeout(updateSolutionStats, 100);
+            };
+
+            updateSolutionStats();
+        });
+
+        function formatNumber(num) {
+            return new Intl.NumberFormat('en-US').format(num);
+        }
+    </script>
+</body>
+</html>
+
+

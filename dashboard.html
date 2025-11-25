@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - EcoHack</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <h2>🌱 EcoHack</h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="battle.html">Region Battle</a></li>
+            <li><a href="solutions.html">Solutions</a></li>
+        </ul>
+        <div class="user-profile">
+            <!-- Populated by app.js -->
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="dashboard-header">
+            <h1>Metric Converter Dashboard</h1>
+            <p>Transform complex energy data into understandable metrics for different audiences</p>
+        </div>
+
+        <div class="audience-tabs">
+            <button class="tab-button active" data-tab="citizens" onclick="switchTab('citizens')">
+                👥 Citizens View
+            </button>
+            <button class="tab-button" data-tab="policymakers" onclick="switchTab('policymakers')">
+                🏛️ Policymakers View
+            </button>
+            <button class="tab-button" data-tab="business" onclick="switchTab('business')">
+                💼 Business/Investors View
+            </button>
+        </div>
+
+        <!-- Citizens View -->
+        <div id="citizensView" class="tab-content" style="display: block;">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">🌳 Trees Equivalent</div>
+                    <div class="metric-value" id="treesEquivalent">0</div>
+                    <div class="metric-description">Equivalent to planting this many trees</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">🏠 Homes Powered</div>
+                    <div class="metric-value" id="homesPowered">0</div>
+                    <div class="metric-description">Number of homes powered by clean energy</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">🚗 Cars Removed</div>
+                    <div class="metric-value" id="carsRemoved">0</div>
+                    <div class="metric-description">Equivalent to removing this many cars from the road</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">💰 Euros Saved</div>
+                    <div class="metric-value" id="eurosSaved">0</div>
+                    <div class="metric-description">Annual savings from energy solutions</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Your Impact at a Glance</h3>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-label">Total CO₂ Saved</div>
+                        <div class="stat-value" id="totalCO2">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Energy Produced</div>
+                        <div class="stat-value" id="totalEnergy">0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Energy Saved</div>
+                        <div class="stat-value" id="totalEnergySaved">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Policymakers View -->
+        <div id="policymakersView" class="tab-content" style="display: none;">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">CO₂ Reduction Score</div>
+                    <div class="metric-value" id="co2ReductionScore">0</div>
+                    <div class="metric-description">Out of 100 points</div>
+                    <div class="progress-container" id="co2Progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Energy Efficiency Rating</div>
+                    <div class="metric-value">
+                        <span class="rating-badge rating-A" id="energyEfficiencyRating">A</span>
+                    </div>
+                    <div class="metric-description">Overall energy efficiency grade</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Lifecycle Sustainability Index</div>
+                    <div class="metric-value" id="sustainabilityIndex">0</div>
+                    <div class="metric-description">Out of 100 points</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%">0%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Circularity Score</div>
+                    <div class="metric-value" id="circularityScore">0</div>
+                    <div class="metric-description">Out of 100 points</div>
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Policy Metrics Overview</h3>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-label">Payback Time</div>
+                        <div class="stat-value" id="paybackTime">0 years</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Total Investment</div>
+                        <div class="stat-value" id="totalInvestment">€0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Annual Savings</div>
+                        <div class="stat-value" id="annualSavings">€0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Business/Investors View -->
+        <div id="businessView" class="tab-content" style="display: none;">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">ROI of Sustainability</div>
+                    <div class="metric-value" id="roiSustainability">0%</div>
+                    <div class="metric-description">Return on investment percentage</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Carbon Cost Avoidance</div>
+                    <div class="metric-value" id="carbonCostAvoidance">€0</div>
+                    <div class="metric-description">Value of avoided carbon costs</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Risk Level</div>
+                    <div class="metric-value">
+                        <span class="badge badge-success" id="riskLevel">Low</span>
+                    </div>
+                    <div class="metric-description">Investment risk assessment</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Time to Profitability</div>
+                    <div class="metric-value" id="timeToProfitability">0 years</div>
+                    <div class="metric-description">Years until investment becomes profitable</div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Investment Breakdown</h3>
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-label">CAPEX</div>
+                        <div class="stat-value" id="capexValue">€0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">OPEX (Annual)</div>
+                        <div class="stat-value" id="opexValue">€0</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-label">Annual Revenue</div>
+                        <div class="stat-value" id="annualRevenue">€0</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3 class="chart-title">Financial Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">Year 0</div>
+                        <div class="timeline-content">
+                            <strong>Initial Investment</strong><br>
+                            CAPEX: <span id="timelineCapex">€0</span>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">Year 1-5</div>
+                        <div class="timeline-content">
+                            <strong>Growth Phase</strong><br>
+                            Annual savings accumulate, OPEX maintained
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date" id="profitabilityYear">Year 8</div>
+                        <div class="timeline-content">
+                            <strong>Profitability Reached</strong><br>
+                            Investment fully recovered, positive cash flow
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/metrics.js"></script>
+    <script src="js/gamification.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
+
+
+
