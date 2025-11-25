@@ -381,6 +381,10 @@ function implementSolution(solutionId) {
 function showImplementationSimulation(solution) {
     const user = getCurrentUser();
     const region = user ? DEMO_DATA.regions.find(r => r.id === user.region.toLowerCase()) : null;
+    const impactCO2Value = solution.co2Saved || 0;
+    const impactEnergyValue = solution.energyProduced || solution.energySaved || 0;
+    const impactSavingsValue = Math.round(solution.cost * (solution.roi / 100));
+    const impactPointsValue = calculateSolutionPoints(solution);
     
     // Create confetti effect
     createConfetti();
@@ -509,25 +513,25 @@ function showImplementationSimulation(solution) {
                 <div class="impact-metrics">
                     <div class="impact-metric">
                         <div class="impact-icon">🌱</div>
-                        <div class="impact-value" id="impactCO2">0</div>
+                        <div class="impact-value" id="impactCO2">${formatNumber(impactCO2Value)}</div>
                         <div class="impact-label">kg CO₂ saved/year</div>
                         <div class="impact-trees">≈ ${Math.round(solution.co2Saved / 20)} trees</div>
                     </div>
                     <div class="impact-metric">
                         <div class="impact-icon">⚡</div>
-                        <div class="impact-value" id="impactEnergy">0</div>
+                        <div class="impact-value" id="impactEnergy">${formatNumber(impactEnergyValue)}</div>
                         <div class="impact-label">kWh ${solution.energyProduced ? 'produced' : 'saved'}/year</div>
                         <div class="impact-homes">≈ ${Math.round((solution.energyProduced || solution.energySaved) / 3000)} homes</div>
                     </div>
                     <div class="impact-metric">
                         <div class="impact-icon">💰</div>
-                        <div class="impact-value" id="impactSavings">€0</div>
+                        <div class="impact-value" id="impactSavings">${formatCurrency(impactSavingsValue)}</div>
                         <div class="impact-label">Annual savings</div>
                         <div class="impact-roi">ROI: ${solution.roi}%</div>
                     </div>
                     <div class="impact-metric">
                         <div class="impact-icon">⭐</div>
-                        <div class="impact-value" id="impactPoints">0</div>
+                        <div class="impact-value" id="impactPoints">${formatNumber(impactPointsValue)}</div>
                         <div class="impact-label">Ecocarma points</div>
                         <div class="impact-level">Level ${getEcocarmaLevel().level}</div>
                     </div>

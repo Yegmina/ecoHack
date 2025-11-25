@@ -90,10 +90,22 @@ function renderRegionMap() {
                 <div class="region-name">${region.name}</div>
                 <div class="region-score">${formatNumber(region.score)}</div>
                 <div class="region-stats">
-                    <div>Rank: #${region.rank}</div>
-                    <div>Teams: ${region.teams}</div>
-                    <div>Solutions: ${region.solutions}</div>
-                    <div>CO₂ Saved: ${formatNumber(region.co2Saved)} kg</div>
+                    <div class="stat-pill">
+                        <span>Rank</span>
+                        <strong>#${region.rank}</strong>
+                    </div>
+                    <div class="stat-pill">
+                        <span>Teams</span>
+                        <strong>${region.teams}</strong>
+                    </div>
+                    <div class="stat-pill">
+                        <span>Solutions</span>
+                        <strong>${region.solutions}</strong>
+                    </div>
+                    <div class="stat-pill">
+                        <span>CO₂ Saved</span>
+                        <strong>${formatNumber(region.co2Saved)} kg</strong>
+                    </div>
                 </div>
                 <div class="progress-container" style="margin-top: 1rem;">
                     <div class="progress-bar">

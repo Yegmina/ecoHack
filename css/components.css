@@ -273,6 +273,65 @@
     text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
+.region-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.region-card:hover .region-stats,
+.region-card.active .region-stats {
+    max-height: 220px;
+    opacity: 1;
+}
+
+.stat-pill {
+    background: rgba(15, 23, 42, 0.05);
+    border-radius: 999px;
+    padding: 0.65rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(148, 163, 184, 0.4);
+    font-size: 0.85rem;
+    line-height: 1.2;
+    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+}
+
+.stat-pill span {
+    color: var(--text-light);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-pill strong {
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.region-card.active .stat-pill,
+.region-card:hover .stat-pill {
+    background: rgba(255, 255, 255, 0.2);
+    color: var(--text-on-gradient);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+.region-card.active .stat-pill span,
+.region-card.active .stat-pill strong,
+.region-card:hover .stat-pill span,
+.region-card:hover .stat-pill strong {
+    color: var(--text-on-gradient);
+}
+
 .region-card .progress-container {
     width: calc(100% - 2rem);
     margin: 1.5rem auto 0;
@@ -302,16 +361,6 @@
 
 .region-card.active .region-score {
     color: white;
-}
-
-.region-stats {
-    font-size: 0.85rem;
-    color: var(--text-light);
-    margin-top: 0.5rem;
-}
-
-.region-card.active .region-stats {
-    color: rgba(255, 255, 255, 0.9);
 }
 
 /* Solution Cards */
