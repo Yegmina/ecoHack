@@ -1,6 +1,6 @@
-# EcoHack
+# CityEcho
 
-A comprehensive, gamified frontend interface for measuring and understanding urban energy solutions' environmental impact. EcoHack transforms complex energy data into understandable metrics for citizens, policymakers, and investors.
+A comprehensive, gamified frontend interface for measuring and understanding urban energy solutions' environmental impact. CityEcho transforms complex energy data into understandable metrics for citizens, policymakers, and investors.
 
 ## Features
 
@@ -86,7 +86,7 @@ ecohack/
 
 ## Problem Statement
 
-EcoHack addresses the challenge of making urban energy solutions' environmental impact understandable for different audiences:
+CityEcho addresses the challenge of making urban energy solutions' environmental impact understandable for different audiences:
 
 > "How might we make the measurement of new urban energy solutions' environmental impact more understandable for citizens, policymakers and investors?"
 
