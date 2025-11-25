@@ -87,17 +87,22 @@ function renderRegionMap() {
         
         return `
             <div class="region-card ${isActive ? 'active' : ''}" data-region="${region.id}">
+                <div class="region-avatar">
+                    <span>${region.name.charAt(0)}</span>
+                </div>
                 <div class="region-name">${region.name}</div>
                 <div class="region-score">${formatNumber(region.score)}</div>
-                <div class="region-stats">
-                    <div class="stat-pill">
-                        <span>Rank</span>
+                <div class="region-summary">
+                    <div>
+                        <span class="label">Rank</span>
                         <strong>#${region.rank}</strong>
                     </div>
-                    <div class="stat-pill">
-                        <span>Teams</span>
+                    <div>
+                        <span class="label">Teams</span>
                         <strong>${region.teams}</strong>
                     </div>
+                </div>
+                <div class="region-stats">
                     <div class="stat-pill">
                         <span>Solutions</span>
                         <strong>${region.solutions}</strong>
@@ -111,6 +116,32 @@ function renderRegionMap() {
                     <div class="progress-bar">
                         <div class="progress-fill" style="width: ${percentage}%"></div>
                     </div>
+                </div>
+                <div class="region-hover-card">
+                    <div class="hover-title">${region.name}</div>
+                    <div class="hover-stats">
+                        <div>
+                            <span>Rank</span>
+                            <strong>#${region.rank}</strong>
+                        </div>
+                        <div>
+                            <span>Teams</span>
+                            <strong>${region.teams}</strong>
+                        </div>
+                        <div>
+                            <span>Solutions</span>
+                            <strong>${region.solutions}</strong>
+                        </div>
+                        <div>
+                            <span>CO₂ Saved</span>
+                            <strong>${formatNumber(region.co2Saved)} kg</strong>
+                        </div>
+                        <div>
+                            <span>Energy Saved</span>
+                            <strong>${formatNumber(region.energySaved)} kWh</strong>
+                        </div>
+                    </div>
+                    <div class="hover-footnote">Click for full details</div>
                 </div>
             </div>
         `;

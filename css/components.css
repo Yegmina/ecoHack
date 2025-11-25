@@ -235,6 +235,7 @@
     position: relative;
     overflow: hidden;
     box-shadow: var(--shadow-md);
+    cursor: pointer;
 }
 
 .region-card::before {
@@ -273,63 +274,113 @@
     text-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
+.region-summary {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    color: var(--text-medium);
+    font-size: 0.9rem;
+    margin: 0.5rem 0 1rem;
+}
+
+.region-summary span.label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+    letter-spacing: 0.06em;
+    color: var(--text-light);
+}
+
 .region-stats {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    display: flex;
     gap: 0.75rem;
-    margin-top: 1rem;
-    max-height: 0;
     opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
 }
 
 .region-card:hover .region-stats,
 .region-card.active .region-stats {
-    max-height: 220px;
     opacity: 1;
 }
 
 .stat-pill {
-    background: rgba(15, 23, 42, 0.05);
-    border-radius: 999px;
-    padding: 0.65rem 1rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(148, 163, 184, 0.4);
-    font-size: 0.85rem;
-    line-height: 1.2;
-    transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease;
+    flex: 1;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
+    padding: 0.75rem;
+    border: 1px solid rgba(148, 163, 184, 0.3);
+    text-align: left;
 }
 
 .stat-pill span {
-    color: var(--text-light);
+    display: block;
     font-size: 0.7rem;
+    color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
 .stat-pill strong {
-    color: var(--text-dark);
+    display: block;
     font-size: 0.95rem;
+    color: var(--text-dark);
+}
+
+.region-hover-card {
+    position: absolute;
+    inset: 12px;
+    border-radius: 16px;
+    background: var(--bg-white);
+    box-shadow: var(--shadow-xl);
+    padding: 1.5rem;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.region-card:hover .region-hover-card {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.hover-title {
+    font-size: 1.1rem;
     font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
 }
 
-.region-card.active .stat-pill,
-.region-card:hover .stat-pill {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--text-on-gradient);
-    border-color: rgba(255, 255, 255, 0.4);
-    transform: translateY(-2px);
+.hover-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    font-size: 0.85rem;
 }
 
-.region-card.active .stat-pill span,
-.region-card.active .stat-pill strong,
-.region-card:hover .stat-pill span,
-.region-card:hover .stat-pill strong {
-    color: var(--text-on-gradient);
+.hover-stats span {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.hover-stats strong {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-dark);
+}
+
+.hover-footnote {
+    text-align: center;
+    font-size: 0.75rem;
+    color: var(--primary-green);
+    margin-top: 1rem;
 }
 
 .region-card .progress-container {
